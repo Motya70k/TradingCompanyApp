@@ -4,37 +4,36 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
+import com.example.trading_company_client.R
 import com.example.trading_company_client.databinding.SearchClientDialogLayoutBinding
 import com.example.trading_company_client.presentation.viewmodel.ClientViewModel
 
 class SearchClientDialog(
-    private val viewModel: ClientViewModel
+    private val viewModel: ClientViewModel,
+    private val token: String
 ): EntityDialog {
 
     override fun show(context: Context) {
         val dialogBinding = SearchClientDialogLayoutBinding.inflate(LayoutInflater.from(context))
         val dialog = AlertDialog.Builder(context)
             .setView(dialogBinding.root)
-            .setTitle("Поиск клиента")
-            .setPositiveButton("Найти") { dialog, _ ->
+            .setTitle(R.string.search_client)
+            .setPositiveButton(R.string.search) { dialog, _ ->
                 val name = dialogBinding.nameEditText.text.toString()
                 val lastname = dialogBinding.lastnameEditText.text.toString()
 
                 if (name.isNotBlank() && lastname.isNotBlank()) {
-                    val sharedPreferences = context.getSharedPreferences("auth", MODE_PRIVATE)
-                    val token = sharedPreferences.getString("token", "")
-                    viewModel.searchClient(token.toString(), name, lastname)
+                    viewModel.searchClient(token, name, lastname)
                 } else {
                     Toast.makeText(
                         context,
-                        "Пожалуйста, проверьте поля ввода",
+                        R.string.please_fill_all_fields_correctly,
                         Toast.LENGTH_SHORT
                     ).show()
                 }
                 dialog.dismiss()
             }
-            .setNegativeButton("Отмена") { dialog, _ ->
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
             }
             .create()

@@ -8,12 +8,15 @@ import com.example.trading_company_client.utils.TokenStorage
 import com.example.trading_company_client.data.model.requests.LoginRequest
 import com.example.trading_company_client.data.model.response.BaseResponse
 import com.example.trading_company_client.domain.usecase.LoginRequestUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel(
+@HiltViewModel
+class LoginViewModel @Inject constructor(
     private val loginRequestUseCase: LoginRequestUseCase,
     private val tokenStorage: TokenStorage
-): ViewModel() {
+) : ViewModel() {
     private val _loginResponse = MutableLiveData<BaseResponse?>()
     val loginResponse: LiveData<BaseResponse?> get() = _loginResponse
 
@@ -35,6 +38,7 @@ class LoginViewModel(
             }
         }
     }
+
     fun clearError() {
         _error.postValue(null)
     }

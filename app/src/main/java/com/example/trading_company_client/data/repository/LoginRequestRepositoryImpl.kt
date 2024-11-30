@@ -1,8 +1,5 @@
 package com.example.trading_company_client.data.repository
 
-import androidx.annotation.OptIn
-import androidx.media3.common.util.Log
-import androidx.media3.common.util.UnstableApi
 import com.example.trading_company_client.constants.URL
 import com.example.trading_company_client.data.model.requests.LoginRequest
 import com.example.trading_company_client.data.model.response.BaseResponse
@@ -18,13 +15,9 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.contentOrNull
-import kotlinx.serialization.json.jsonPrimitive
 
 class LoginRequestRepositoryImpl : LoginRequestRepository {
 
-    @OptIn(UnstableApi::class)
     override suspend fun employeeLogin(loginRequest: LoginRequest): BaseResponse? {
         return try {
             val client = HttpClient(Android) {
@@ -41,10 +34,8 @@ class LoginRequestRepositoryImpl : LoginRequestRepository {
             }
 
             val responseBody = response.bodyAsText()
-            Log.d("LoginActivity", "Server response: $responseBody")
             val baseResponse = Json.decodeFromString(BaseResponse.serializer(), responseBody)
             val token = baseResponse.message
-            Log.d("LoginActivity", "Deserialized token: $token")
             baseResponse.token = token
             baseResponse
 

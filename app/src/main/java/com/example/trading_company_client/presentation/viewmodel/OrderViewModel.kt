@@ -3,15 +3,17 @@ package com.example.trading_company_client.presentation.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.trading_company_client.data.model.Order
 import com.example.trading_company_client.data.model.requests.AddOrderRequest
 import com.example.trading_company_client.data.model.requests.UpdateOrderRequest
 import com.example.trading_company_client.domain.usecase.OrderUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class OrderViewModel(
+@HiltViewModel
+class OrderViewModel @Inject constructor(
     private val orderUseCase: OrderUseCase
 ): ViewModel() {
 
@@ -71,16 +73,5 @@ class OrderViewModel(
                 print(e.message)
             }
         }
-    }
-}
-
-class OrderViewModelFactory(
-    private val orderUseCase: OrderUseCase
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(OrderViewModel::class.java)) {
-            return OrderViewModel(orderUseCase) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

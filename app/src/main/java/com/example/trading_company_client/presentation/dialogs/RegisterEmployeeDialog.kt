@@ -4,25 +4,23 @@ import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
+import com.example.trading_company_client.R
 import com.example.trading_company_client.data.model.requests.RegisterRequest
 import com.example.trading_company_client.databinding.RegisterEmployeeDialogLayoutBinding
 import com.example.trading_company_client.presentation.viewmodel.EmployeeViewModel
 
 class RegisterEmployeeDialog(
-    private val viewModel: EmployeeViewModel
+    private val viewModel: EmployeeViewModel,
+    private val token: String
 ): EntityDialog {
 
     override fun show(context: Context) {
         val dialogBinding = RegisterEmployeeDialogLayoutBinding.inflate(LayoutInflater.from(context))
 
-        val sharedPreferences = context.getSharedPreferences("auth", MODE_PRIVATE)
-        val token = sharedPreferences.getString("token", "")
-
         val dialog = AlertDialog.Builder(context)
             .setView(dialogBinding.root)
-            .setTitle("Добавление сотрудника")
-            .setPositiveButton("Добавить") { dialog, _ ->
+            .setTitle(R.string.add_employee)
+            .setPositiveButton(R.string.add) { dialog, _ ->
                 val login = dialogBinding.loginEditText.text.toString()
                 val password = dialogBinding.passwordEditText.text.toString()
                 val name = dialogBinding.nameEditText.text.toString()
@@ -34,13 +32,13 @@ class RegisterEmployeeDialog(
                     lastname.isNotBlank() && phone.isNotBlank() && role.isNotBlank()) {
 
                     val registerRequest = RegisterRequest(login, password, name, lastname, phone, role)
-                    viewModel.registerEmployee(token.toString(), registerRequest)
+                    viewModel.registerEmployee(token, registerRequest)
                 } else {
-                    Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.please_fill_all_fields_correctly, Toast.LENGTH_SHORT).show()
                 }
                 dialog.dismiss()
             }
-            .setNegativeButton("Отмена") { dialog, _ ->
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
             }
             .create()

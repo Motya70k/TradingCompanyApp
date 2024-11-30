@@ -1,5 +1,16 @@
 package com.example.trading_company_client.utils
 
-interface TokenStorage {
-    fun saveToken(token: String)
+import android.content.SharedPreferences
+import javax.inject.Inject
+
+class TokenStorage @Inject constructor(
+    val sharedPreferences: SharedPreferences
+) {
+    fun saveToken(token: String) {
+        sharedPreferences.edit().putString("token", token).apply()
+    }
+
+    fun getToken(): String? {
+        return sharedPreferences.getString("token", null)
+    }
 }

@@ -3,15 +3,17 @@ package com.example.trading_company_client.presentation.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.trading_company_client.data.model.Purchase
 import com.example.trading_company_client.data.model.requests.AddPurchaseRequest
 import com.example.trading_company_client.data.model.requests.UpdatePurchaseRequest
 import com.example.trading_company_client.domain.usecase.PurchaseUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PurchaseViewModel(
+@HiltViewModel
+class PurchaseViewModel @Inject constructor(
     private val purchaseUseCase: PurchaseUseCase
 ) : ViewModel() {
     private val _purchases = MutableLiveData<List<Purchase>>()
@@ -70,16 +72,5 @@ class PurchaseViewModel(
                 print(e.message)
             }
         }
-    }
-}
-
-class PurchaseViewModelFactory(
-    private val purchaseUseCase: PurchaseUseCase
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(PurchaseViewModel::class.java)) {
-            return PurchaseViewModel(purchaseUseCase) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

@@ -3,15 +3,17 @@ package com.example.trading_company_client.presentation.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.trading_company_client.data.model.Item
 import com.example.trading_company_client.data.model.requests.AddItemRequest
 import com.example.trading_company_client.data.model.requests.UpdateItemRequest
 import com.example.trading_company_client.domain.usecase.ItemUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ItemViewModel(
+@HiltViewModel
+class ItemViewModel @Inject constructor(
     private val itemUseCase: ItemUseCase
 ) : ViewModel() {
     private val _items = MutableLiveData<List<Item>>()
@@ -70,16 +72,5 @@ class ItemViewModel(
                 print(e.message)
             }
         }
-    }
-}
-
-class ItemViewModelFactory(
-    private val itemUseCase: ItemUseCase
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ItemViewModel::class.java)) {
-            return ItemViewModel(itemUseCase) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
