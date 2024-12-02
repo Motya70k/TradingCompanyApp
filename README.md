@@ -19,6 +19,7 @@ ___
 + ![Static Badge](https://img.shields.io/badge/-Ktor-087CFA?style=for-the-badge&logo=Ktor&logoColor=white)
 + ![Static Badge](https://img.shields.io/badge/dagger%20hilt-85EA2D?style=for-the-badge&logoColor=white)
 + ![Static Badge](https://img.shields.io/badge/kotlinx%20serialization-7F52FF?style=for-the-badge&logoColor=white)
++ MVVM
 ___
 ## Установка
 1. Склонировать репозиторий
