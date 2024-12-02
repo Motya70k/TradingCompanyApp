@@ -30,7 +30,7 @@ ___
    + Склонировать проект
    ```
    git init
-   git clone https://github.com/Motya70k/TradingCompanyApp
+   git clone https://github.com/mvshvetsov/TradingCompanyApp
    ```
 2. Открыть проект в Android Studio
 3. Синхронизировать проект
